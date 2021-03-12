@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  context-path: /springbootDemo
+spring:
+  datasource:
+    name: mydata
+    url: jdbc:mysql://172.20.10.14:3306/demo?useSSL=true
+    username: root
+    password: root
+    # 使用druid数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.study.entity
+    #classpath就是应用程序resources的路径
+
+# 打印sql日志
+logging:
+  level:
+    com.study.dao : debug
+
+
+
