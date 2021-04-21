@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.jeeplus.common.utils.excel;
+package com.study.excel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +18,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.study.excel.annotation.ExcelField;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -36,10 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.jeeplus.common.utils.Encodes;
-import com.jeeplus.common.utils.Reflections;
-import com.jeeplus.common.utils.excel.annotation.ExcelField;
-import com.jeeplus.modules.sys.utils.DictUtils;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
@@ -384,10 +381,6 @@ public class ExportExcel {
 							val = Reflections.invokeMethod(e, ((Method)os[1]).getName(), new Class[] {}, new Object[] {});
 						}
 					}
-					// If is dict, get dict label
-					if (StringUtils.isNotBlank(ef.dictType())){
-						val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
-					}
 				}catch(Exception ex) {
 					// Failure to ignore
 					log.info(ex.toString());
@@ -417,14 +410,14 @@ public class ExportExcel {
 	public ExportExcel write(HttpServletResponse response, String fileName) throws IOException{
 		response.reset();
         response.setContentType("application/octet-stream; charset=utf-8");
-        response.setHeader("Content-Disposition", "attachment; filename="+Encodes.urlEncode(fileName));
+        response.setHeader("Content-Disposition", "attachment; filename="+ Encodes.urlEncode(fileName));
 		write(response.getOutputStream());
 		return this;
 	}
 	
 	/**
 	 * 输出到文件
-	 * @param fileName 输出文件名
+	 * @param name 输出文件名
 	 */
 	public ExportExcel writeFile(String name) throws FileNotFoundException, IOException{
 		FileOutputStream os = new FileOutputStream(name);
