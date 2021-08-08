@@ -359,7 +359,7 @@ public class ImportExcel {
 					//log.debug("Import value type: ["+i+","+column+"] " + valType);
 					try {
 						//如果导入的java对象，需要在这里自己进行变换。
-						if (valType == String.class){
+						if (valType == String.class) {
 							String s = String.valueOf(val.toString());
 							if(StringUtils.endsWith(s, ".0")){
 								val = StringUtils.substringBefore(s, ".0");
